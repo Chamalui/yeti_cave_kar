@@ -19,7 +19,7 @@ $cat = [
     [
     "name" => "DC Ply Mens 2016/2017 Snowboard",
     "category" => $catArray[0]["category"],
-    "cost" => 159999,
+    "cost" => 15999,
     "img" => "img/lot-2.jpg"
     ],
     [
@@ -48,6 +48,16 @@ $cat = [
     ]
 ];
 
+function money_format($number){
+    $number = ceil($number);
+    if($number>1000){
+        $result = number_format($number,0,","," ");
+    } else{
+        $result = $number;
+    }
+    return $result.'<b class="rub">p</b>';
+}
+
 $user_name = 'Alex'; // укажите здесь ваше имя
 ?>
 <!DOCTYPE html>
@@ -56,7 +66,7 @@ $user_name = 'Alex'; // укажите здесь ваше имя
     <meta charset="UTF-8">
     <title>Главная</title>
     <link href="../css/normalize.min.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="page-wrapper">
@@ -65,7 +75,7 @@ $user_name = 'Alex'; // укажите здесь ваше имя
     <div class="main-header__container container">
         <h1 class="visually-hidden">YetiCave</h1>
         <a class="main-header__logo">
-            <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
+            <img src="img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
         </a>
         <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
             <input type="search" name="search" placeholder="Поиск лота">
@@ -114,10 +124,16 @@ $user_name = 'Alex'; // укажите здесь ваше имя
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <!--заполните этот список из массива категорий-->
-            <li class="promo__item promo__item--boards">
-                <a class="promo__link" href="pages/all-lots.html">Имя категории</a>
-            </li>
+            <?php
+            foreach ($catArray as $category)
+            {
+                ?>
+                <li class="promo__item promo__item--<?=$category["image"]?>">
+                    <a class="promo__link" href="pages/all-lots.html"><?=$category["category"]?></a>
+                </li>
+                <?php
+            }
+            ?>
         </ul>
     </section>
     <section class="lots">
@@ -125,18 +141,22 @@ $user_name = 'Alex'; // укажите здесь ваше имя
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
+            <?php
+            foreach ($cat as $goods)
+            {
+            ?>
             <!--заполните этот список из массива с товарами-->
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="" width="350" height="260" alt="">
+                    <img src="<?=$goods["img"]?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category">Название категории</span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html">Название товара</a></h3>
+                    <span class="lot__category"><?=$goods["category"]?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$goods["name"]?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost">цена<b class="rub">р</b></span>
+                            <span class="lot__cost"><?=money_format($goods["cost"])?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -144,6 +164,9 @@ $user_name = 'Alex'; // укажите здесь ваше имя
                     </div>
                 </div>
             </li>
+            <?php
+            }
+            ?>
         </ul>
     </section>
 </main>
@@ -152,10 +175,17 @@ $user_name = 'Alex'; // укажите здесь ваше имя
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
+            <?php
+            foreach ($catArray as $category)
+            {
+            ?>
             <!--заполните этот список из массива категорий-->
             <li class="nav__item">
-                <a href="pages/all-lots.html">Название категории</a>
+                <a href="pages/all-lots.html"><?=$category["category"]?></a>
             </li>
+            <?php
+            }
+            ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
