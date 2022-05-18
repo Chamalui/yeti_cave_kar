@@ -1,7 +1,7 @@
 <?php
 $is_auth = rand(0, 1);
 
-$catArray = [
+/*$catArray = [
     ["category" => "Доски и лыжи", "image" => "boards"],
     ["category" => "Крепления", "image" => "attachment"],
     ["category" => "Ботинки", "image" => "boots"],
@@ -46,7 +46,7 @@ $cat = [
         "cost" => 5400,
         "img" => "img/lot-6.jpg"
     ]
-];
+];*/
 
 function money_format($number){
     $number = ceil($number);
