@@ -78,5 +78,5 @@ function include_template($name,$data){
     return $result;
 }
 
-$user_name = 'Alex'; // укажите здесь ваше имя
+$user_name = 'Chamalui'; // укажите здесь ваше имя
 ?>

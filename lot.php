@@ -3,37 +3,22 @@
 require_once ('functions.php');
 require_once ('connect.php');
 
-$link = mysqli_connect('127.0.0.1', 'root', '','yeticavekar');
-mysqli_set_charset($link, utf8);
 
+if(isset($_GET['id'])){
+    $id = intval($_GET['id']);
+    foreach ($lotArray as $goods) {
+        if($goods['id_lot']==$id){
+            $content = include_template('lot.php', ['lotArray' => $lotArray, 'betArray' => $betArray, 'userArray' => $userAray, 'category' => $category]);
+            $layout_content = include_template('layout.php', ['content' => $content, 'lotArray' => $lotArray, 'betArray' => $betArray, 'userArray' => $userAray, 'category' => $category]);
 
+            print($layout_content);
+        }
+    }
+    if(empty($lotArray['id_lot'][$id])){
+        $content = include_template('lot.php', ['lotArray' => $lotArray, 'betArray' => $betArray, 'userArray' => $userAray, 'category' => $category]);
+        $layout_content = include_template('layout.php', ['content' => $content, 'lotArray' => $lotArray, 'betArray' => $betArray, 'userArray' => $userAray, 'category' => $category]);
 
-$select = 'SELECT * FROM category';
-
-$cat = $link -> query($select);
-
-$category = $cat -> fetch_all(MYSQLI_ASSOC);
-
-
-
-$select = 'SELECT * FROM lots';
-
-$lots = $link -> query($select);
-
-$lots_array = $lots -> fetch_all(MYSQLI_ASSOC);
-
-
-
-$select = 'SELECT * FROM bet';
-
-$bet = $link -> query($select);
-
-$bet_array = $bet -> fetch_all(MYSQLI_ASSOC);
-
-
-
-$lot = include_template('lot.php', ['category' => $category, 'lots' => $lots, 'bet' => $bet]);
-$layout_content = include_template('layout.php', ['page'=>$page, 'catArray'=>$catArray,'title'=>'Главная страница','is_auth'=>$is_auth,'user_name'=>$user_name, 'lotsArray'=>$lotsArray]);
-print($lot);
-
-?>
+        print($layout_content);
+    }
+/*добавить 404 как появится то при обовлении будет 404*/
+}
